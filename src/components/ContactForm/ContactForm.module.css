@@ -1,0 +1,39 @@
+.error {
+  color: #ed6161;
+  font-size: 14px;
+}
+.classForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px; /* Максимальная ширина формы, чтобы не занимала всю ширину страницы */
+  margin: auto; /* Центрирование формы на странице */
+}
+
+.classForm input {
+  /* margin-bottom: 10px; Отступ между инпутами */
+  padding: 8px; /* Внутренний отступ для инпутов */
+  border: 1px solid #ccc; /* Граница вокруг инпутов */
+  border-radius: 4px; /* Скругление углов инпутов */
+}
+
+.classForm button {
+  padding: 10px; /* Внутренний отступ для кнопки */
+  background-color: #007bff; /* Цвет фона кнопки */
+  color: #fff; /* Цвет текста на кнопке */
+  border: none; /* Убираем границу у кнопки */
+  border-radius: 4px; /* Скругление углов кнопки */
+  cursor: pointer; /* Устанавливаем указатель при наведении на кнопку */
+  margin-bottom: 10px;
+}
+
+.classForm button:hover {
+  background-color: #0056b3; /* Изменяем цвет фона при наведении на кнопку */
+}
+
+.classForm p {
+  margin-bottom: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(121, 120, 119);
+  padding-left: 9px;
+}
