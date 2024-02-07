@@ -46,7 +46,6 @@ export const ContactForm = ({ handleSubmitForm }) => {
       validationSchema={FeedbackSchema}
     >
       <Form className={css.classForm}>
-        {/* <label htmlFor={nameFieldId}>Username</label> */}
         <ErrorMessage name="name" component="div" className={css.error} />
         <Field
           type="text"
@@ -54,7 +53,7 @@ export const ContactForm = ({ handleSubmitForm }) => {
           id={nameFieldId}
           placeholder="Username"
         />
-        {/* <label htmlFor={numberFieldId}>Number</label> */}
+
         <ErrorMessage name="number" component="div" className={css.error} />
 
         <Field
