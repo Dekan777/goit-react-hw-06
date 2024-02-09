@@ -1,49 +1,55 @@
-import { useId, forwardRef } from 'react';
-import { IMaskInput } from 'react-imask';
+import { useId } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact } from '../redux/contacsSlice';
+import { getContact } from '../redux/selectors';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import css from './ContactForm.module.css';
-const NumberMask = forwardRef(function TextMaskCustom(props, ref) {
-  const { onChange, ...other } = props;
-  return (
-    <IMaskInput
-      {...other}
-      mask="000-00-00"
-      definitions={{
-        '#': /[0-9]/,
-      }}
-      inputRef={ref}
-      onAccept={value => onChange({ target: { name: props.name, value } })}
-      overwrite
-    />
-  );
-});
-const FeedbackSchema = Yup.object().shape({
-  name: Yup.string()
-    .matches(/^[a-zA-Z\s-]+$/, 'Must contain only letters, spaces, and hyphens')
-    .min(3, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Username required for entry'),
-  number: Yup.string()
-    .min(3, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Number required for entry'),
-});
 
 const initialValues = {
   name: '',
   number: '',
 };
 
-export const ContactForm = ({ handleSubmitForm }) => {
+export const ContactForm = () => {
   const nameFieldId = useId();
   const numberFieldId = useId();
+  const id = useId();
+
+  const contacts = useSelector(getContact);
+  const dispatch = useDispatch();
+
+  const handlePushForm = async (values, { resetForm }) => {
+    const { name, number } = values;
+
+    if (
+      contacts.contacts &&
+      contacts.contacts.some(item => item.name === name)
+    ) {
+      alert(`${name} is already in contact!`);
+    } else {
+      dispatch(addContact({ id, name, number }));
+      resetForm();
+    }
+  };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .matches(/^[a-zA-Z\s-]+$/, 'Must contain only letters')
+      .min(3, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Username required for entry'),
+    number: Yup.string()
+      .min(3, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Number required for entry'),
+  });
 
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={handleSubmitForm}
-      validationSchema={FeedbackSchema}
+      onSubmit={handlePushForm}
+      validationSchema={validationSchema}
     >
       <Form className={css.classForm}>
         <ErrorMessage name="name" component="div" className={css.error} />
@@ -55,15 +61,14 @@ export const ContactForm = ({ handleSubmitForm }) => {
         />
 
         <ErrorMessage name="number" component="div" className={css.error} />
-
         <Field
           type="text"
           name="number"
           id={numberFieldId}
-          as={NumberMask}
           placeholder="Number"
         />
-        <p>Format: 123-45-67</p>
+
+        <p> </p>
         <button type="submit">Submit</button>
       </Form>
     </Formik>
