@@ -19,7 +19,7 @@ export const SearchBox = () => {
         className={css.input}
         type="text"
         id={id}
-        onChange={handleChange} // Use handleChange instead of handleSubmit
+        onChange={handleChange}
       />
     </div>
   );
