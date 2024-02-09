@@ -14,7 +14,6 @@ const initialValues = {
 export const ContactForm = () => {
   const nameFieldId = useId();
   const numberFieldId = useId();
-  const id = useId();
 
   const contacts = useSelector(getContact);
   const dispatch = useDispatch();
