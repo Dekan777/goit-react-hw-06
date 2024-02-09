@@ -22,13 +22,13 @@ export const ContactForm = () => {
   const handlePushForm = async (values, { resetForm }) => {
     const { name, number } = values;
 
-    if (
-      contacts.contacts &&
-      contacts.contacts.some(item => item.name === name)
-    ) {
+    const contactExists = contacts.contacts.some(item => item.name === name);
+
+    if (contactExists) {
       alert(`${name} is already in contact!`);
     } else {
-      dispatch(addContact({ id: nanoid(10), name, number }));
+      const newContact = { id: nanoid(10), name, number };
+      dispatch(addContact(newContact));
       resetForm();
     }
   };
@@ -53,6 +53,7 @@ export const ContactForm = () => {
     >
       <Form className={css.classForm}>
         <ErrorMessage name="name" component="div" className={css.error} />
+
         <Field
           type="text"
           name="name"
@@ -61,6 +62,7 @@ export const ContactForm = () => {
         />
 
         <ErrorMessage name="number" component="div" className={css.error} />
+
         <Field
           type="text"
           name="number"
