@@ -5,7 +5,7 @@ import { getContact } from '../redux/selectors';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import css from './ContactForm.module.css';
-
+import { nanoid } from 'nanoid';
 const initialValues = {
   name: '',
   number: '',
@@ -28,7 +28,7 @@ export const ContactForm = () => {
     ) {
       alert(`${name} is already in contact!`);
     } else {
-      dispatch(addContact({ id, name, number }));
+      dispatch(addContact({ id: nanoid(10), name, number }));
       resetForm();
     }
   };

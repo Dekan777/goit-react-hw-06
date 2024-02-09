@@ -5,9 +5,11 @@ import { useId } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContact, getFilter } from '../redux/selectors';
 import { removeContact } from '../redux/contacsSlice';
-
+import { nanoid } from 'nanoid';
+import { v4 as uuidv4 } from 'uuid'; // Import the uuid library
 export const ContactList = () => {
   const nameFieldId = useId();
+
   const contacts = useSelector(getContact);
   // const filter = useSelector(getFilter);
   // console.log(filter);
@@ -20,12 +22,12 @@ export const ContactList = () => {
   //       item.name.toLowerCase().includes(filter.toLowerCase())
   //     )
   //   : contacts;
-
+  // const buttonId = nanoid();
   return (
     <div>
-      {contacts.contacts.map(({ name, number }, id) => (
-        <div className={css.conteyner} key={id}>
-          <p className={css.pIttem}>
+      {contacts.contacts.map(({ name, number, id }) => (
+        <div className={css.container} key={`${name}-${number}`}>
+          <p className={css.pItem}>
             <BsFillPersonFill className={css.myIcon} size="20" />
             {name}
           </p>
@@ -37,7 +39,6 @@ export const ContactList = () => {
           <button
             className={css.button}
             onClick={() => handleRemoveContact(id)}
-            key={`delete-${id}`}
           >
             Delete
           </button>
